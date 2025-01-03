@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.educandoweb.course.entities.Product;
 import com.educandoweb.course.repositories.ProductRepository;
+import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class ProductService {
@@ -23,6 +24,6 @@ public class ProductService {
   public Product findById(UUID id) {
     Optional<Product> product = repository.findById(id);
 
-    return product.orElse(null);
+    return product.orElseThrow(() -> new ResourceNotFoundException(id));
   }
 }

@@ -30,10 +30,6 @@ public class ProductResource {
   public ResponseEntity<Product> findById(@PathVariable UUID id) {
     Product product = productService.findById(id);
 
-    if (product == null) {
-      return ResponseEntity.notFound().build();
-    }
-
     return ResponseEntity.ok().body(product);
   }
 }

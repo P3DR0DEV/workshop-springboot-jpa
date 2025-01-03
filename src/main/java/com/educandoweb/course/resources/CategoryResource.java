@@ -31,10 +31,6 @@ public class CategoryResource {
   public ResponseEntity<Category> findById(@PathVariable UUID id) {
     Category category = categoryService.findById(id);
 
-    if (category == null) {
-      return ResponseEntity.notFound().build();
-    }
-
     return ResponseEntity.ok().body(category);
   }
 }

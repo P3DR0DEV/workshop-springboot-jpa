@@ -30,10 +30,6 @@ public class OrderResource {
   public ResponseEntity<Order> findById(@PathVariable UUID id) {
     Order order = orderService.findById(id);
 
-    if (order == null) {
-      return ResponseEntity.notFound().build();
-    }
-
     return ResponseEntity.ok().body(order);
   }
 }
