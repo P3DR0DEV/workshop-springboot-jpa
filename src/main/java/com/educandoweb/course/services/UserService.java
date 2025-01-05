@@ -13,6 +13,7 @@ import com.educandoweb.course.entities.User;
 import com.educandoweb.course.repositories.UserRepository;
 import com.educandoweb.course.services.exceptions.DatabaseException;
 import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
+import com.educandoweb.course.util.BcryptHashPassword;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -32,6 +33,14 @@ public class UserService {
     }
 
     public User insert(User user) {
+        User entity = repository.findByEmail(user.getEmail());
+
+        if (entity != null) {
+            throw new DatabaseException("Email já cadastrado");
+        }
+
+        user.setPassword(BcryptHashPassword.hashPassword(user.getPassword()));
+
         User userInserted = repository.save(user);
 
         return userInserted;
@@ -63,5 +72,11 @@ public class UserService {
         entity.setName(user.getName());
         entity.setEmail(user.getEmail());
         entity.setPhone(user.getPhone());
+    }
+
+    public User findByEmail(String email) {
+        User user = repository.findByEmail(email);
+
+        return user;
     }
 }

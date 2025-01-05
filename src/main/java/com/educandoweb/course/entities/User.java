@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -20,6 +21,8 @@ public class User implements Serializable {
     @GeneratedValue(generator = "UUID")
     private UUID id;
     private String name;
+
+    @Column(unique = true)
     private String email;
     private String phone;
     private String password;
