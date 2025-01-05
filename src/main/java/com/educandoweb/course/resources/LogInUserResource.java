@@ -3,7 +3,6 @@ package com.educandoweb.course.resources;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.educandoweb.course.entities.RequestUser;
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.services.UserService;
 import com.educandoweb.course.util.BcryptHashPassword;
@@ -22,15 +21,12 @@ public class LogInUserResource {
   private UserService userService;
 
   @PostMapping("")
-  public ResponseEntity<String> postMethodName(@RequestBody RequestUser entity) {
+  public ResponseEntity<String> postMethodName(@RequestBody User entity) {
     User user = userService.findByEmail(entity.getEmail());
 
     if (user == null) {
       return ResponseEntity.badRequest().body("Email incorreto");
     }
-
-    System.out.println("user - " + user.getPassword());
-    System.out.println("entity - " + entity.getPassword());
 
     // primeiro parametro é a senha enviada, segundo é a senha salva no banco
     Boolean passwordVerification = BcryptHashPassword.verifyPassword(entity.getPassword(), user.getPassword());
